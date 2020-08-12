@@ -1,6 +1,6 @@
 # Dynamic Form
 
-## Create Page
+## Create Form
 ``` 
     End Point   :  /form
     Method      :  POST
@@ -18,7 +18,7 @@
     }
 ```
 
-## All Page
+## All Form
 ``` 
     End Point   :  /form
     Method      :  GET
@@ -38,9 +38,9 @@
     }
 ```
 
-## Retrive Page
+## Retrive Form
 ``` 
-    End Point   :  /page/:id
+    End Point   :  /form/:id
     Method      :  GET
     Respond Data: {
         "code": 200,
@@ -49,11 +49,11 @@
             "title": "My Form", 
             "action": {
                 store: {
-                    url: "/page/:id/submit",
+                    url: "/form/:id/submit",
                     method: "POST"
                 },
                 get: {
-                    url: "/page/:id/submit",
+                    url: "/form/:id/submit",
                     method: "GET"
                 }
             },
@@ -66,9 +66,9 @@
     }
 ```
 
-## Page Submit
+## Form Submit
 ``` 
-    End Point   :  /page/:id/submit
+    End Point   :  /form/:id/submit
     Method      :  POST
     Request Body:  { 
         "name": "Alic", 
@@ -87,9 +87,9 @@
     }
 ```
 
-## Retrive Page Submit
+## Retrive Form Submit
 ``` 
-    End Point   :  /page/:id/submit
+    End Point   :  /form/:id/submit
     Method      :  GET
     Respond Data:  {
         "code": 200,
