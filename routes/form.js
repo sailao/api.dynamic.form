@@ -7,12 +7,15 @@ router
     .route('/')
     .post((req, res, next) =>{
         var appForm = new AppForm();
-        appForm.title = req.body.title;
-        appForm.formComponent = req.body.formComponent;
-        appForm.save();
+        // appForm.title = req.body.title;
+        // appForm.formComponent = req.body.formComponent;
+        appForm.save(req.body);
 
 
-        res.json(req.body);
+        res.status(201).json({
+            "code" : 201,
+            "message" : "success!! form is created",
+        });
     })
     .get(async(req, res)=>{
         var appForms = await AppForm.find({})

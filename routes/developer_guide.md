@@ -3,7 +3,7 @@
 ## Create Page
 ``` 
     End Point   :  /form
-    Methos      :  POST
+    Method      :  POST
 
     Request Body :
         {
@@ -18,7 +18,7 @@
     Respond Data:
         {
             "code": "201",
-            "message: "success!! create form",
+            "message: "success!! form is created",
             "data": []
         }
 ```
@@ -26,7 +26,7 @@
 ## All Page
 ``` 
     End Point   :  /form
-    Methos      :  GET
+    Method      :  GET
 
     Request Body : {}
     
