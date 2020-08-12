@@ -1,11 +1,5 @@
-var mongoose, {Schema, model} = require('mongoose');
+var {Schema, model} = require('mongoose');
 
-var formSchema = new Schema({ 
-    title: String,
-    formComponents: [{
-        type: Schema.Types.String, 
-        ref: 'formComponent' 
-    }]
-}, {strict: false});
+var formSchema = new Schema({ }, {strict: false});
 
 module.exports =  model('appForms', formSchema); 
