@@ -22,29 +22,12 @@ router
             "message" : "success!! form is created",
         });
     })
-    .get('/:id', (req, res)=>{
+    .get('/:id', async(req, res)=>{
+        var data = await (await AppForm.findById(req.params.id)).toJSON()
         res.json({ 
             code: 200, 
             message: "success", 
-            data: {
-                "id": req.params.id,
-                "title": "My Form", 
-                "action": {
-                    "store": {
-                        "url": "/form/:id/submit",
-                        "method": "POST"
-                    },
-                    "get": {
-                        "url": "/form/:id/submit",
-                        "method": "GET"
-                    }
-                },
-                "primary-color": "#000000",
-                "formComponent": [
-                    {"name": "Student Name", "type":"text", "placeHolder": "Enter user name"},
-                    {"name": "Student Name", "type":"text"}
-                ]
-            }
+            data: data
         })
     })
     .get('/:id/submit', (req, res)=>{
