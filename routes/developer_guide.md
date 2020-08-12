@@ -1,7 +1,6 @@
 # Dynamic Form
 
 ## Create Page
-
 ``` 
     End Point   :  /form
     Methos      :  POST
@@ -12,29 +11,19 @@
             "action": "localhost:9000/form",
             "formComponent": [
                 {"name": "Student Name", "type":"text"},
-                {"name": "Student Name", "type":"text"}
+                {"name": "Student Age", "type":"number"}
             ]
         }
 
     Respond Data:
         {
-            "title": "Student Registration Form",
-            "action": "localhost:9000/form",
-            "formComponent": [
-                {
-                    "name": "Student Name",
-                    "type": "text"
-                },
-                {
-                    "name": "Student Name",
-                    "type": "text"
-                }
-            ]
+            "code": "201",
+            "message: "success!! create form",
+            "data": []
         }
 ```
 
-## Create Page
-
+## All Page
 ``` 
     End Point   :  /form
     Methos      :  GET
