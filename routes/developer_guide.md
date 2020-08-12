@@ -70,10 +70,20 @@
 ``` 
     End Point   :  /page/:id/submit
     Method      :  POST
-    Request Body:  { }
+    Request Body:  { 
+        "name": "Alic", 
+        "email": "alic@examplemail.com",
+        "phone": "09444558741"
+    }
     Respond Data:  {
         "code": 201,
         "message": "success!! created",
+        "data": {
+            "id": **********
+            "name": "Alic", 
+            "email": "alic@examplemail.com",
+            "phone": "09444558741"
+        }
     }
 ```
 
