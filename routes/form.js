@@ -22,13 +22,21 @@ router
             "message" : "success!! form is created",
         });
     })
-    .get('/:id', async(req, res)=>{
-        var data = await (await AppForm.findById(req.params.id)).toJSON()
-        res.json({ 
-            code: 200, 
-            message: "success", 
-            data: data
-        })
+    .get('/:id', (req, res)=>{
+        AppForm.findById(req.params.id, (err, data)=> {
+            if(err){
+                res.json({
+                    "code": 404,
+                    "message": "id not exist"
+                })
+            }else{
+                res.json({ 
+                    code: 200, 
+                    message: "success", 
+                    data: data.toJSON()
+                })
+            }
+        });
     })
     .get('/:id/submit', (req, res)=>{
         res.json({ 
