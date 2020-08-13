@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var AppForm = require("../model/AppForm");
+var Model = require("../model/Model");
+var {model, Schema} = require('mongoose');
 
 router
     .get('/', async(req, res)=>{
@@ -12,10 +14,15 @@ router
             data: appForms 
         })
     })
-    .post('/', (req, res, next) =>{
-        (new AppForm).save
-        var appForm = new AppForm(req.body);
-        appForm.save();
+    .post('/', async(req, res, next) =>{
+
+        var createAppForm = await (new AppForm(req.body)).save();
+
+        var createFormModel = await (new Model({
+            form: createAppForm.toJSON()._id,
+            model: createAppForm.toJSON().form.formName.replace(/\s/g, ''),
+            rawSchema: createAppForm.toJSON()
+        })).save();
 
         res.status(201).json({
             "code" : 201,
@@ -26,39 +33,70 @@ router
         AppForm.findById(req.params.id, (err, data)=> {
             if(err){
                 res.json({
-                    "code": 404,
-                    "message": "id not exist"
+                    "code": 500,
+                    "message": "db error"
                 })
-            }else{
+            }else if(data){
                 res.json({ 
                     code: 200, 
                     message: "success", 
                     data: data.toJSON()
                 })
+            }else{
+                res.json({
+                    "code": 404,
+                    "message": "id not exist"
+                })
             }
         });
     })
     .get('/:id/submit', (req, res)=>{
-        res.json({ 
-            code: 200, 
-            message: "success", 
-            data: [
-                {"id": req.params.id},
-                {"id": req.params.id}
-            ]
-        })
+        Model.findOne({form:req.params.id}, (err, data)=> {
+            if(err){
+                console.log(err)
+                res.json({
+                    "code": 500,
+                    "message": "database error"
+                })
+            }else if(data){
+                model(data.model,(new Schema({},{strict: false}))).find((err, data)=>{
+                    if(err || !data.length) res.json({code: 404});
+                    res.json({ 
+                        code: 200, 
+                        message: "success", 
+                        data: data || data.toJSON()
+                    })
+                })
+                
+            }else{
+                res.json({
+                    "code": 404,
+                    "message": "id not exist"
+                })
+            }
+        }); 
     })
     .post('/:id/submit', (req, res)=>{
-        res.json({
-            code: 201, 
-            message: "success!! created", 
-            data: {
-                "id": req.params.id,
-                "name": "Alic", 
-                "email": "alic@examplemail.com",
-                "phone": "09444558741"
-            } 
-        })
+        Model.findOne({form:req.params.id}, (err, data)=> {
+            if(err){
+                console.log(err)
+                res.json({
+                    "code": 500,
+                    "message": "database error"
+                })
+            }else if(data){
+                (new model(data.model,(new Schema({},{strict: false}))))(req.body).save((err, data)=>{
+                    if(err || !data.length) res.json({code: 404})
+                    res.json({"code": 201})
+                })
+                
+            }else{
+                res.json({
+                    "code": 404,
+                    "message": "id not exist"
+                })
+            }
+        }); 
     }) 
 
 module.exports = router;
